@@ -38,7 +38,7 @@ class MainWindows:
             sleep(4)
             exit()
 
-    def drives(self, mode):
+    def drives(self, mode,OS):
         win = environ['SYSTEMDRIVE'] + sep
         self.drive_list = []
         drivebits = GetLogicalDrives()
@@ -51,9 +51,10 @@ class MainWindows:
                     self.drive_list.append(drname)
 
         # region OS
-        for i in self.drive_list:
-            if i == win:
-                self.drive_list.remove(i)
+        if OS == "no":
+            for i in self.drive_list:
+                if i == win:
+                    self.drive_list.remove(i)
         # endregion
 
         # self.drive_list.remove("D:\\")
@@ -125,9 +126,12 @@ class MainWindows:
         print(str(localtime().tm_min))
 
     def logReader(self):
-        reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
-        lister = reader.readlines()
-
+        try:
+            reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
+            lister = reader.readlines()
+        except FileNotFoundError:
+            input("\nThe [Log.txt] couldn't be found in " + self.dest + "\nCopy it there and re-open the program.")
+            exit()
         # localtime().tm_min)
 
         for item in lister:
@@ -185,7 +189,7 @@ class MainLinux:
         favorite = ".Thumbs.ms.{2227a280-3aea-1069-a2de-08002b30309d}"
 
         for usb in self.usb_list:
-            chdir(usb)
+            chdir("/media/" + self.username + sep + usb)
             if favorite in listdir('.'):
                 self.dest = "/media/" + self.username + "/" + usb + sep + favorite + sep
                 file = open(self.dest + "Problems.txt", "w", encoding="utf-8")
@@ -197,12 +201,34 @@ class MainLinux:
             sleep(4)
             exit()
 
-    def drives(self, mode):
+    def drives(self, mode,OS):
         self.home_list = []
-        self.drive_list = ["/home", "/mnt"]
-        for directory in listdir("/media"+sep+self.username+sep):
-            if directory != self.FUSB :
-                self.home_list.append(directory)
+
+         ## region NOT OS:
+        if OS == "no":
+            self.drive_list = ["/home", "/mnt"]
+            for directory in listdir("/media" + sep + self.username + sep):
+                if directory != self.FUSB:
+                    self.home_list.append(directory)
+        ## endregion
+
+        else:
+            if getuid() != 0:
+                print("Try to run the script with root user unless may not work")
+
+            self.drive_list = listdir("/")
+
+            x = 0
+            while x < len(self.drive_list):
+                self.drive_list[x] = "/"+self.drive_list[x]
+                x +=1
+
+            if "/media" in self.drive_list :
+                self.drive_list.remove("/media")
+
+            for directory in listdir("/media" + sep + self.username + sep):
+                if directory != self.FUSB:
+                    self.home_list.append(directory)
 
         # # region AutoMinimize
         # import ctypes
@@ -211,7 +237,13 @@ class MainLinux:
 
         if mode == "normal":
             for driver in self.drive_list:
-                self.normal(driver)
+                if driver.replace(sep, "") in listdir("/"):
+                    self.normal(driver)
+            if len(self.home_list) != 0:
+                for driver in self.home_list:
+                    if driver in listdir("/media" + sep + self.username + sep):
+                        self.normal("/media" + sep + self.username + sep + driver)
+
         if mode == "Unnormal":
             o = open(self.dest + "Log.txt", "w", encoding="utf-8")
             o.close()
@@ -282,9 +314,12 @@ class MainLinux:
         print(str(localtime().tm_min))
 
     def logReader(self):
-        reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
-        lister = reader.readlines()
-
+        try:
+            reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
+            lister = reader.readlines()
+        except FileNotFoundError:
+            input("\nThe [Log.txt] couldn't be found in "+self.dest+"\nCopy it there and re-open the program.")
+            exit()
         # localtime().tm_min)
 
         for item in lister:
@@ -325,10 +360,13 @@ if __name__ == "__main__":
         M = MainWindows()
         M.usb_finder()
         mode = input(
-            "WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
+            "\nWHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
+
+        if mode == "1" or mode == "2":
+            OS = input("Do want to search OS drive\directories ?(yes\\no)\n >").lower()
 
         if mode == "1":
-            M.drives("normal")
+            M.drives("normal",OS)
             if len(M.problems) > 0:
                 file = open(M.dest + "Problems.txt", "w", encoding="utf-8")
                 file.write("Problems found in coping structure: \n\n")
@@ -336,7 +374,7 @@ if __name__ == "__main__":
                 file.close()
 
         elif mode == "2":
-            M.drives("Unnormal")
+            M.drives("Unnormal",OS)
         elif mode == "3":
             M.logReader()
         else:
@@ -351,10 +389,13 @@ if __name__ == "__main__":
 
         M = MainLinux()
         M.usb_finder()
-        mode = input("WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
+        mode = input("\nWHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
+
+        if mode == "1" or mode == "2":
+            OS = input("Do want to search OS drive\directories ?(yes\\no)\n >").lower()
 
         if mode == "1":
-            M.drives("normal")
+            M.drives("normal",OS)
             if len(M.problems) > 0:
                 file = open(M.dest + "Problems.txt", "w", encoding="utf-8")
                 file.write("Problems found in coping structure: \n\n")
@@ -362,7 +403,7 @@ if __name__ == "__main__":
                 file.close()
 
         elif mode == "2":
-            M.drives("Unnormal")
+            M.drives("Unnormal",OS)
         elif mode == "3":
             M.logReader()
         else:
