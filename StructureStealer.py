@@ -2,7 +2,7 @@ import threading
 from os.path import isdir
 from platform import system as syst
 from os import chdir, makedirs, walk, sep, path, listdir,system
-from sys import stdout
+from sys import stdout,exit
 from time import ctime, sleep, localtime
 
 class MainWindows:
