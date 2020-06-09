@@ -3,7 +3,7 @@ from os.path import isdir
 from platform import system as syst
 from os import chdir, makedirs, walk, sep, path, listdir,system
 from sys import stdout,exit
-from time import ctime, sleep, localtime
+from time import ctime, localtime
 
 class MainWindows:
     def __init__(self):
