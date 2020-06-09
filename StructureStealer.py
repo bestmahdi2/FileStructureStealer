@@ -398,7 +398,7 @@ if __name__ == "__main__":
             "WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
 
         if mode == "1" or mode == "2":
-            OS = input("====\nDo want to search OS drive\directories ?(yes\\no)\n >").lower()
+            OS = input("\n====\nDo you want to search OS drive\directories ?(yes\\no)\n >").lower()
             print("====")
 
         if mode == "1":
@@ -429,7 +429,7 @@ if __name__ == "__main__":
             "WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
 
         if mode == "1" or mode == "2":
-            OS = input("====\nDo want to search OS drive\directories ?(yes\\no)\n >").lower()
+            OS = input("\n====\nDo you want to search OS drive\directories ?(yes\\no)\n >").lower()
             print("====")
 
         if mode == "1":
