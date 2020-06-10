@@ -91,7 +91,7 @@ class MainWindows:
     def normal(self, driver):
         chdir(driver)
         print("\n" + driver + "...")
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
         for (dirpath, dirname, filenames) in walk('.'):
             for filename in filenames:
@@ -100,22 +100,31 @@ class MainWindows:
                 absulpath = absulpathR.replace(":", "")[:absulpathR.rfind(sep)] + sep
                 try:
                     makedirs(path.dirname(self.dest + absulpath), exist_ok=True)
+
                     file = open(self.dest + absulpath + filename, "w", encoding="utf-8")
-                    file.write("[Size]\n" + str(path.getsize(absulpathR) / 1024) + " KB" + "\n" + str(
-                        path.getsize(absulpathR) / 1024 / 1024) + " MB" + "\n" + str(
-                        path.getsize(absulpathR) / 1024 / 1024 / 1024) + " GB" +
+                    sizeR = path.getsize(absulpathR)
+
+                    if round(sizeR / 1024 / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                    else:
+                        if round(sizeR / 1024 / 1024) != 0:
+                            size = str(round(sizeR / 1024 / 1024)) + " MB"
+                        else:
+                            size = str(round(sizeR / 1024)) + " KB"
+
+                    file.write("[Size]\n" + size +
                                "\n\n[Modified Date]\n" + str(ctime(path.getmtime(absulpathR))) +
                                "\n\n[Created Date]\n" + str(ctime(path.getctime(absulpathR))))
                     file.close()
                 except FileNotFoundError:
                     self.problems.append(self.dest + absulpath + filename + "\n")
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     # region unNormal
     def logWriter(self, driver):
         chdir(driver)
         print("\n" + driver + "...")
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
         for (dirpath, dirnames, filenames) in walk('.'):
             for filename in filenames:
@@ -140,10 +149,11 @@ class MainWindows:
                 self.problems.append(str(UnicodeEncodeError) + " for a file in " + keep[:keep.rfind(sep)])
         file.close()
 
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     def logReader(self):
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
         try:
             reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
             lister = reader.readlines()
@@ -162,10 +172,15 @@ class MainWindows:
                 # region RIHGT_STRUCTURE
                 cd = ctime(float(details[details.rfind("[CD]"):].replace("\n", "").replace("[CD]", "")))
                 md = ctime(float(details[details.rfind("[MD]"):details.rfind("[CD]")].replace("[MD]", "")))
-                sizeR = float(
-                    details[details.rfind("[Size]"):details.rfind(" B")].replace(" B", "").replace("[Size]", ""))
-                size = str(sizeR / 1024) + " KB\n" + str(sizeR / 1024 / 1024) + " MB\n" + str(
-                    sizeR / 1024 / 1024 / 1024) + " GB"
+                sizeR = float(details[details.rfind("[Size]"):details.rfind(" B")].replace(" B", "").replace("[Size]", ""))
+
+                if round(sizeR/1024 / 1024 / 1024) != 0:
+                    size = str(round(sizeR / 1024 / 1024 / 1024,1)) + " GB"
+                else:
+                    if round(sizeR/1024 / 1024) != 0 :
+                        size = str(round(sizeR / 1024 / 1024)) + " MB"
+                    else:
+                        size = str(round(sizeR / 1024)) + " KB"
 
                 toprint = "[Size]\n" + size + "\n\n[Modified Date]\n" + str(md) + "\n\n[Created Date]\n" + str(cd)
                 # endregion
@@ -175,7 +190,7 @@ class MainWindows:
                     file.write(toprint)
             except:
                 self.problems.append(self.dest + absulpath + filename)
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     # endregion
 
@@ -291,7 +306,7 @@ class MainLinux:
     def normal(self, driver):
         chdir(driver)
         print("\n" + driver + "...")
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
         for (dirpath, dirname, filenames) in walk('.'):
             for filename in filenames:
@@ -302,9 +317,17 @@ class MainLinux:
                     makedirs(path.dirname(self.dest + absulpath), exist_ok=True)
 
                     file = open(self.dest + absulpath + filename, "w", encoding="utf-8")
-                    file.write("[Size]\n" + str(path.getsize(absulpathR) / 1024) + " KB" + "\n" + str(
-                        path.getsize(absulpathR) / 1024 / 1024) + " MB" + "\n" + str(
-                        path.getsize(absulpathR) / 1024 / 1024 / 1024) + " GB" +
+                    sizeR = path.getsize(absulpathR)
+
+                    if round(sizeR / 1024 / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                    else:
+                        if round(sizeR / 1024 / 1024) != 0:
+                            size = str(round(sizeR / 1024 / 1024)) + " MB"
+                        else:
+                            size = str(round(sizeR / 1024)) + " KB"
+
+                    file.write("[Size]\n" + size +
                                "\n\n[Modified Date]\n" + str(ctime(path.getmtime(absulpathR))) +
                                "\n\n[Created Date]\n" + str(ctime(path.getctime(absulpathR))))
                     file.close()
@@ -312,13 +335,13 @@ class MainLinux:
                     self.problems.append(self.dest + absulpath + filename + "\n")
                 except OSError:
                     self.problems.append(self.dest + absulpath+"\n")
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     # region unNormal
     def logWriter(self, driver):
         chdir(driver)
         print("\n" + driver + "...")
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
         for (dirpath, dirnames, filenames) in walk('.'):
             for filename in filenames:
@@ -343,10 +366,10 @@ class MainLinux:
                 self.problems.append(str(UnicodeEncodeError) + " for a file in " + keep[:keep.rfind(sep)])
         file.close()
 
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     def logReader(self):
-        print("start: "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
         try:
             reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
             lister = reader.readlines()
@@ -368,8 +391,14 @@ class MainLinux:
                 md = ctime(float(details[details.rfind("[MD]"):details.rfind("[CD]")].replace("[MD]", "")))
                 sizeR = float(
                     details[details.rfind("[Size]"):details.rfind(" B")].replace(" B", "").replace("[Size]", ""))
-                size = str(sizeR / 1024) + " KB\n" + str(sizeR / 1024 / 1024) + " MB\n" + str(
-                    sizeR / 1024 / 1024 / 1024) + " GB"
+
+                if round(sizeR / 1024 / 1024 / 1024) != 0:
+                    size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                else:
+                    if round(sizeR / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024)) + " MB"
+                    else:
+                        size = str(round(sizeR / 1024)) + " KB"
 
                 toprint = "[Size]\n" + size + "\n\n[Modified Date]\n" + str(md) + "\n\n[Created Date]\n" + str(cd)
                 # endregion
@@ -379,7 +408,7 @@ class MainLinux:
                     file.write(toprint)
             except:
                 self.problems.append(self.dest + absulpath + filename)
-        print("end  : "+ str(localtime().tm_min)+":"+str(localtime().tm_sec))
+        print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
     # endregion
 
@@ -398,7 +427,7 @@ if __name__ == "__main__":
             "WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
 
         if mode == "1" or mode == "2":
-            OS = input("\n====\nDo you want to search OS drive\directories ?(yes\\no)\n >").lower()
+            OS = input("====\nDo you want to search OS drive\directories ?(yes\\no)\n > ").lower()
             print("====")
 
         if mode == "1":
@@ -429,7 +458,7 @@ if __name__ == "__main__":
             "WHAT WOULD YOU LOVE TO DO?\n1)COPY Structure\n2)SAVE structure to Log\n3)LOAD structure from Log\n > ")
 
         if mode == "1" or mode == "2":
-            OS = input("\n====\nDo you want to search OS drive\directories ?(yes\\no)\n >").lower()
+            OS = input("====\nDo you want to search OS drive\directories ?(yes\\no)\n > ").lower()
             print("====")
 
         if mode == "1":
@@ -446,4 +475,3 @@ if __name__ == "__main__":
             M.logReader()
         else:
             print("\nDidn't get it!!! What do you want to do?\nre-run the program if you were sure.")
-
