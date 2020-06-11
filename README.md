@@ -3,7 +3,7 @@ This is a python program to copy all your files structures.
 
 این یک برنامه پایتون برای کپی کردن ساختار فایل های شماست.
 ***
-If you're not a developer, download and use the **FileStealerPC2USB.exe** in **Release(GitHub)** .
+If you're not a developer, download and use the **FileStealerPC2USB.exe** in **Release(GitHub)**.
 
 اگر برنامه نویس نیستید ، در قسمت **ریلیز** در سایت گیت هاب **فایل اجرایی** رو دانلود و اجرا کنید 
 ***
@@ -12,12 +12,12 @@ If you're not a developer, download and use the **FileStealerPC2USB.exe** in **R
 
 StructureStealer.py: Script for both windows and Linux users
 
-##What is it ??? چی هست ؟؟؟
+## What is it ??? چی هست ؟؟؟
 This program helps you to copy structures.
 Imagine that you have a really short time and a tiny space to copy someone's
-files, so what if we copy the *name, location , size , create time, modified time* 
+files, so what if we copy the *name, location, size, create time, modified time* 
 of all files to *analyze* what we need, and then come back with FileStealer to copy
-them ?
+them?
 
 این برنامه به شما کمک میکند تا ساختار فایل ها را کپی کنید. فرض کنید زمان و فضای کمی برای کپی کردن فایل های یک شخص دارید، اگر بتوانید *اسم، مکان، تاریخ ساخت، تاریخ ویرایش* آن ها را داشته باشید چه ؟ و بعد با برنامه ی فایل_استیلر برگردید و آن ها کپی کنید .
 
@@ -45,7 +45,7 @@ The program creat a directory in your USB(\\.Thum...) and for example a *Newfile
     [Modified TIme]
     jan 23 2020 10;15:05
  
- And you can use these information to improve your attacks.
+ And you can use this information to improve your attacks.
     
  .و میتوانید از این اطلاعات برای بهبود حملات خود استفاده کنید
 
@@ -56,7 +56,7 @@ You need to creat a folder in your USB with this name:
 :برنامه نیاز دارد که دایرکتوری با نام زیر در یو اس بی خود بسازید
 
     .Thumbs.ms.{2227a280-3aea-1069-a2de-08002b30309d}
-It tells program that which *USB* is yours and actually does everything in that folder.
+It tells the program that which *USB* is yours and does everything in that folder.
 
 این پوشه ، یو اس بی شما را معلوم میکند و اتفاقات بعدی هم در همان پوشه خواهد افتاد.
 
@@ -72,9 +72,9 @@ To access the copied files, rename ".Thumbs.ms.{2227a280-3aea-1069-a2de-08002b30
 ###Second : دوم
 Select between these 3 :
 
-1)COPY Structure : It means that program copy all files directly into your USB, but it may take lots of time.
+1)COPY Structure: It means that the program copy all files directly into your USB, but it may take lots of time.
 
-2)SAVE structure to Log : This is much much faster that the the first one, it copies all files' addresses to a *Log.txt* .
+2)SAVE structure to Log: This is much much faster than the the first one, it copies all files' addresses to a *Log.txt* .
 
 3)LOAD structure from Log : If you used the second option, then you need this option to extract files from *Log.txt* 
  .
