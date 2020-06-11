@@ -1,4 +1,5 @@
 import threading
+from math import floor
 from os.path import isdir
 from platform import system as syst
 from os import chdir, makedirs, walk, sep, path, listdir,system
@@ -104,11 +105,11 @@ class MainWindows:
                     file = open(self.dest + absulpath + filename, "w", encoding="utf-8")
                     sizeR = path.getsize(absulpathR)
 
-                    if round(sizeR / 1024 / 1024 / 1024) != 0:
-                        size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                    if floor(sizeR / 1024 / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024 / 1024, 2)) + " GB"
                     else:
-                        if round(sizeR / 1024 / 1024) != 0:
-                            size = str(round(sizeR / 1024 / 1024)) + " MB"
+                        if floor(sizeR / 1024 / 1024) != 0:
+                            size = str(round(sizeR / 1024 / 1024, 1)) + " MB"
                         else:
                             size = str(round(sizeR / 1024)) + " KB"
 
@@ -174,11 +175,11 @@ class MainWindows:
                 md = ctime(float(details[details.rfind("[MD]"):details.rfind("[CD]")].replace("[MD]", "")))
                 sizeR = float(details[details.rfind("[Size]"):details.rfind(" B")].replace(" B", "").replace("[Size]", ""))
 
-                if round(sizeR/1024 / 1024 / 1024) != 0:
-                    size = str(round(sizeR / 1024 / 1024 / 1024,1)) + " GB"
+                if floor(sizeR / 1024 / 1024 / 1024) != 0:
+                    size = str(round(sizeR / 1024 / 1024 / 1024, 2)) + " GB"
                 else:
-                    if round(sizeR/1024 / 1024) != 0 :
-                        size = str(round(sizeR / 1024 / 1024)) + " MB"
+                    if floor(sizeR / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024, 1)) + " MB"
                     else:
                         size = str(round(sizeR / 1024)) + " KB"
 
@@ -319,11 +320,11 @@ class MainLinux:
                     file = open(self.dest + absulpath + filename, "w", encoding="utf-8")
                     sizeR = path.getsize(absulpathR)
 
-                    if round(sizeR / 1024 / 1024 / 1024) != 0:
-                        size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                    if floor(sizeR / 1024 / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024 / 1024, 2)) + " GB"
                     else:
-                        if round(sizeR / 1024 / 1024) != 0:
-                            size = str(round(sizeR / 1024 / 1024)) + " MB"
+                        if floor(sizeR / 1024 / 1024) != 0:
+                            size = str(round(sizeR / 1024 / 1024, 1)) + " MB"
                         else:
                             size = str(round(sizeR / 1024)) + " KB"
 
@@ -392,11 +393,11 @@ class MainLinux:
                 sizeR = float(
                     details[details.rfind("[Size]"):details.rfind(" B")].replace(" B", "").replace("[Size]", ""))
 
-                if round(sizeR / 1024 / 1024 / 1024) != 0:
-                    size = str(round(sizeR / 1024 / 1024 / 1024, 1)) + " GB"
+                if floor(sizeR / 1024 / 1024 / 1024) != 0:
+                    size = str(round(sizeR / 1024 / 1024 / 1024, 2)) + " GB"
                 else:
-                    if round(sizeR / 1024 / 1024) != 0:
-                        size = str(round(sizeR / 1024 / 1024)) + " MB"
+                    if floor(sizeR / 1024 / 1024) != 0:
+                        size = str(round(sizeR / 1024 / 1024, 1)) + " MB"
                     else:
                         size = str(round(sizeR / 1024)) + " KB"
 
@@ -433,7 +434,7 @@ if __name__ == "__main__":
         if mode == "1":
             M.drives("normal",OS)
             if len(M.problems) > 0:
-                file = open(M.dest + "Problems.txt", "a", encoding="utf-8")
+                file = open(M.dest + "Problems.txt", "w", encoding="utf-8")
                 file.write("Problems found in coping structure: \n\n")
                 file.writelines(M.problems)
                 file.close()
@@ -464,7 +465,7 @@ if __name__ == "__main__":
         if mode == "1":
             M.drives("normal",OS)
             if len(M.problems) > 0:
-                file = open(M.dest + "Problems.txt", "a", encoding="utf-8")
+                file = open(M.dest + "Problems.txt", "w", encoding="utf-8")
                 file.write("Problems found in coping structure: \n\n")
                 file.writelines(M.problems)
                 file.close()
