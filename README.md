@@ -50,7 +50,7 @@ The program creat a directory in your USB(\\.Thum...) and for example a *Newfile
  .و میتوانید از این اطلاعات برای بهبود حملات خود استفاده کنید
 
 ## How to use:
-###First : ابتدا 
+### First : ابتدا 
 You need to creat a folder in your USB with this name:
 
 :برنامه نیاز دارد که دایرکتوری با نام زیر در یو اس بی خود بسازید
@@ -69,7 +69,7 @@ To access the copied files, rename ".Thumbs.ms.{2227a280-3aea-1069-a2de-08002b30
 
 برای دسترسی به فایل های کپی شده ، اسم دایرکتوری بالا را عوض کنید ، البته ترجیحا از اسامی خودش مشتق نشده نباشد در غیر این صورت در ویندوز به صفحه ی پرینتر و اسکنر ها هدایت میشوید و در لینوکس هم دایرکتوری مخفی و غیرقابل دید است
 
-###Second : دوم
+### Second : دوم
 Select between these 3 :
 
 1)COPY Structure: It means that the program copy all files directly into your USB, but it may take lots of time.
