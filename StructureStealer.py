@@ -152,16 +152,39 @@ class MainWindows:
 
         print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
-    def logReader(self):
+    def openfile(self):
+        file_path = ""
+        from tkinter import filedialog, Tk
+        root = Tk()
+        root.withdraw()
+        file_path = filedialog.askopenfilename(initialdir="/", title="Select file",filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
+        self.address = file_path
+        return file_path
 
+    def logReader(self):
         print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
         try:
             reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
             lister = reader.readlines()
         except FileNotFoundError:
-            input("====\nThe [Log.txt] couldn't be found in " + self.dest + "\nCopy it there and re-open the program.\n====")
-            self.timer()
-            exit()
+        # region ask open file
+            input("====\nThe [Log.txt] couldn't be found in " + self.dest + "\nClick [Enter] to select the file manually.\n")
+            if self.openfile() == "":
+                input("You didn't choose a file, select again[Enter]\n")
+                if self.openfile() == "":
+                    print("Time out!!!")
+                    self.timer()
+                    exit()
+                else:
+                    reader = open(self.address, "r", encoding="utf-8")
+                    lister = reader.readlines()
+            else:
+                reader = open(self.address, "r", encoding="utf-8")
+                lister = reader.readlines()
+
+            print("====\n")
+            # endregion
+
 
         for item in lister:
             item = item.replace("\n", "")
@@ -369,16 +392,40 @@ class MainLinux:
 
         print("end  : "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
 
+    def openfile(self):
+        file_path = ""
+        from tkinter import filedialog, Tk
+        root = Tk()
+        root.withdraw()
+        file_path = filedialog.askopenfilename(initialdir="/", title="Select file",filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
+        self.address = file_path
+        return file_path
+
     def logReader(self):
         print("start: "+ str(localtime().tm_min)+"\':"+str(localtime().tm_sec)+"\"")
         try:
             reader = open(self.dest + "Log.txt", "r", encoding="utf-8")
             lister = reader.readlines()
+
         except FileNotFoundError:
-            input("====\nThe [Log.txt] couldn't be found in "+self.dest+"\nCopy it there and re-open the program.\n====")
-            self.timer()
-            exit()
-        # localtime().tm_min)
+            # region ask open file
+            input(
+                "====\nThe [Log.txt] couldn't be found in " + self.dest + "\nClick [Enter] to select the file manually.\n")
+            if self.openfile() == "":
+                input("You didn't choose a file, select again[Enter]\n")
+                if self.openfile() == "":
+                    print("Time out!!!")
+                    self.timer()
+                    exit()
+                else:
+                    reader = open(self.address, "r", encoding="utf-8")
+                    lister = reader.readlines()
+            else:
+                reader = open(self.address, "r", encoding="utf-8")
+                lister = reader.readlines()
+
+            print("====\n")
+            # endregion
 
         for item in lister:
             item = item.replace("\n", "")
